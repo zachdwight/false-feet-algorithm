@@ -7,7 +7,7 @@
 
 ## 🎯 What Is This?
 
-The **False Feet Algorithm** is a novel architecture for solving complex problems through **adaptive multi-branch reasoning** with **inverse resource allocation**. 
+The **False Feet Algorithm** is a cool architecture for solving complex problems through **adaptive multi-branch reasoning** with **inverse resource allocation**. 
 
 Instead of giving more resources to strong branches (traditional approach), this algorithm gives **more resources to weak branches** — forcing them to either improve or naturally die off. When multiple independent reasoning paths converge on the same answer despite starting with different hypotheses, that's a **very robust signal** of correctness.
 
