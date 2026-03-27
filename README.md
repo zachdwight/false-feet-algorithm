@@ -17,17 +17,29 @@ The name comes from the biological metaphor: **amoebas use temporary "false feet
 
 ## 🚀 Quick Start
 
-### Try It Now (30 seconds)
+### Option 1: Mystery Solver (Original)
 
 ```bash
-# Compile
-g++ -std=c++17 -O2 src/poirot_main.cpp -o solver
+# Compile the mystery solver
+make build
 
 # Run (solves "The Vanished Necklace" mystery)
-./solver
+make run
 ```
 
-**Output:** 4 investigative branches compete to solve a Hercule Poirot-style mystery. They converge on the guilty party in ~2 rounds. ✅
+**Output:** 4 investigative branches compete to solve a Hercule Poirot-style mystery. Converges in ~2 rounds. ✅
+
+### Option 2: Generic Framework (New!)
+
+```bash
+# Compile the generic version
+make generic
+
+# Run (solves product recommendation problem)
+make run-generic
+```
+
+**Output:** 4 evaluation branches compete to find the best product. Framework works for ANY hypothesis evaluation problem!
 
 ### Read the Overview (5 minutes)
 
@@ -95,10 +107,15 @@ CONVERGENCE CHECK
 
 ## 📦 What's Included
 
-### Source Code (`src/`)
-- **poirot_mystery.h** — Core data structures (Evidence, Suspect, Branch, Pool, Evaluator)
-- **poirot_solver.h** — Main algorithm (6 phases, helper functions)
-- **poirot_main.cpp** — Mystery scenario + entry point
+### Mystery Solver (Domain-Specific)
+- **src/poirot_mystery.h** — Mystery-specific structures (Evidence, Suspect, Branch, Pool, Evaluator)
+- **src/poirot_solver.h** — Mystery investigation algorithm
+- **src/poirot_main.cpp** — "The Vanished Necklace" scenario
+
+### Generic Framework (Reusable for Any Domain)
+- **src/amoeba_framework.h** — Generic data structures (DataPoint, Option, Problem, EvaluationBranch, HypothesisEvaluator)
+- **src/amoeba_solver.h** — Generic Amoeba Algorithm solver
+- **src/generic_main.cpp** — Examples: Product Recommendation & Medical Diagnosis
 
 ### Documentation (`docs/`)
 - **QUICK_START.md** — Visual introduction with diagrams
@@ -218,6 +235,66 @@ All surviving branches agree: butler is guilty!
 
 ---
 
+## 🎯 Using the Generic Framework
+
+**The generic framework is domain-agnostic and ready to use for any hypothesis evaluation problem!**
+
+### How It Works
+
+Replace mystery-specific concepts with your own:
+
+| Mystery | Generic | Your Domain |
+|---------|---------|------------|
+| Evidence | DataPoint | Requirement, Feature, Symptom |
+| Suspect | Option | Product, Diagnosis, Recipe |
+| Investigation | Evaluation | Analysis, Assessment |
+
+### Quick Example: Product Recommendation
+
+```cpp
+// Define your problem
+Problem problem;
+problem.title = "Best Product for Customer";
+problem.goal = "Find optimal product given constraints";
+
+// Add options to evaluate
+problem.options = {
+    Option{"product_a", "Premium Pro", "For power users", "top-tier quality", 50},
+    Option{"product_b", "Budget Basic", "For cost-conscious", "affordable", 40}
+};
+
+// Add data points that support/contradict options
+problem.all_data.push_back(DataPoint{
+    "data_1",
+    "Customer needs portability",
+    "Lightweight is critical",
+    {"product_b"},        // supports lightweight product
+    {"product_a"},        // contradicts heavy premium product
+    5                     // priority
+});
+
+// Run the algorithm
+AmoebaInvestigation solver(problem);
+solver.solve();
+```
+
+All 4 evaluation branches compete, share data, and converge on best product! ✅
+
+### Other Examples Included
+
+See `src/generic_main.cpp` for:
+- **Product Recommendation** — Find best product for customer needs
+- **Medical Diagnosis** — Identify most likely diagnosis from symptoms
+
+### Create Your Own
+
+1. Define your `Option` candidates
+2. Define your `DataPoint` evidence/requirements
+3. Create a `Problem` with them
+4. Run `AmoebaInvestigation solver(problem); solver.solve();`
+
+---
+
 ## 🎨 Customization
 
 ### Change the Mystery
@@ -304,16 +381,16 @@ See [`docs/amoeba_algorithm_spec.md`](docs/amoeba_algorithm_spec.md) Section 4 f
 
 | Metric | Value |
 |--------|-------|
-| **Lines of Code** | ~850 |
+| **Lines of Code** | ~1,500 (mystery + generic) |
 | **Documentation** | ~9,000 lines |
-| **Header Files** | 2 |
-| **Implementation Files** | 1 |
-| **Test Case Suspects** | 4 |
-| **Test Case Clues** | 13 |
+| **Header Files** | 4 (2 mystery-specific, 2 generic) |
+| **Implementation Files** | 2 (poirot_main + generic_main) |
+| **Mystery Test Case** | 4 suspects, 13 clues |
+| **Generic Examples** | 2 (product recommendation, medical diagnosis) |
 | **Parallel Branches** | 4 |
 | **Compile Time** | < 1 second |
 | **Runtime** | < 1 second |
-| **Executable Size** | 90 KB |
+| **Executable Size** | ~100 KB (each) |
 
 ---
 
