@@ -1,4 +1,4 @@
-# 🧬 False Feet Algorithm
+# False Feet Algorithm
 ## Novel Approach to Problem-Solving Through Inverse Resource Allocation
 
 > *"When weak theories are given fair chances, convergence becomes a signal of robustness, not just luck."*
