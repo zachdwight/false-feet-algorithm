@@ -146,6 +146,14 @@ Read [`docs/amoeba_algorithm_spec.md`](docs/amoeba_algorithm_spec.md) — Full f
 - Loss functions & hyperparameters
 - Failure mode analysis
 
+### For Benchmarking & Comparison
+Read [`docs/BENCHMARKS.md`](docs/BENCHMARKS.md) — Comprehensive performance analysis:
+- Comparison to Greedy, Beam Search, and Uniform Parallel methods
+- Convergence speed and accuracy metrics across problem difficulties
+- Evidence efficiency analysis
+- Real-world application scenarios
+- When to use False Feet vs simpler alternatives
+
 ---
 
 ## 🧪 The Test Case: Poirot Mystery
