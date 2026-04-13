@@ -37,7 +37,6 @@ jobs:
       uses: codecov/codecov-action@v3
       with:
         files: ./python/.coverage
-        fail_ci_if_error: true
 
   publish:
     name: Publish to PyPI
