@@ -24,21 +24,20 @@ jobs:
         python-version: ${{ matrix.python-version }}
 
     - name: Install dependencies
-      working-directory: ./python
       run: |
         python -m pip install --upgrade pip
-        pip install -e ".[dev,viz]"
+        cd python && pip install -e ".[dev,viz]"
 
     - name: Run tests
-      working-directory: ./python
-      run: pytest false_feet_algorithm/tests/ -v --cov=false_feet_algorithm
+      run: |
+        cd python && pytest false_feet_algorithm/tests/ -v --cov=false_feet_algorithm
 
     - name: Upload coverage
       if: matrix.python-version == '3.9'
       uses: codecov/codecov-action@v3
       with:
         files: ./python/.coverage
-        fail_ci_if_error: false
+        fail_ci_if_error: true
 
   publish:
     name: Publish to PyPI
@@ -61,12 +60,10 @@ jobs:
         pip install build twine
 
     - name: Build distribution
-      working-directory: ./python
-      run: python -m build
+      run: cd python && python -m build
 
     - name: Publish to PyPI
-      working-directory: ./python
       env:
         TWINE_USERNAME: __token__
         TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
-      run: twine upload dist/*
+      run: cd python && twine upload dist/*
