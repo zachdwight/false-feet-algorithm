@@ -3,12 +3,8 @@
 from setuptools import setup, find_packages
 import os
 
-# Handle README path for both local and CI/CD runs
-readme_path = "README.md"
-if not os.path.exists(readme_path):
-    readme_path = "../README.md"
-
-with open(readme_path, "r", encoding="utf-8") as fh:
+# Read README
+with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
