@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "false-feet-algorithm"
+version = "0.1.0"
+description = "A novel multi-branch hypothesis evaluation system"
+readme = "README.md"
+requires-python = ">=3.7"
+license = {text = "MIT"}
+authors = [
+    {name = "Zach Dwight"}
+]
+keywords = ["hypothesis", "evaluation", "reasoning", "algorithm", "multi-branch", "convergence"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+[project.optional-dependencies]
+viz = ["matplotlib>=3.3.0"]
+dev = ["pytest>=6.0", "pytest-cov>=2.10.0", "black>=21.0", "mypy>=0.900", "tox>=3.0"]
+
+[project.urls]
+Homepage = "https://github.com/zachdwight/false-feet-algorithm"
+Documentation = "https://github.com/zachdwight/false-feet-algorithm"
+Repository = "https://github.com/zachdwight/false-feet-algorithm.git"
+Issues = "https://github.com/zachdwight/false-feet-algorithm/issues"
+Changelog = "https://github.com/zachdwight/false-feet-algorithm/blob/main/CHANGELOG.md"

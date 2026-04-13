@@ -9,10 +9,16 @@ setup(
     name="false-feet-algorithm",
     version="0.1.0",
     author="Zach Dwight",
+    author_email="",  # Add your email here if publishing
     description="A novel multi-branch hypothesis evaluation system",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/zachdwight/false-feet-algorithm",
+    project_urls={
+        "Bug Tracker": "https://github.com/zachdwight/false-feet-algorithm/issues",
+        "Documentation": "https://github.com/zachdwight/false-feet-algorithm",
+        "Source Code": "https://github.com/zachdwight/false-feet-algorithm",
+    },
     packages=find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
@@ -30,6 +36,6 @@ setup(
     python_requires=">=3.7",
     extras_require={
         "viz": ["matplotlib>=3.3.0"],
-        "dev": ["pytest>=6.0", "pytest-cov>=2.10.0", "black>=21.0", "mypy>=0.900"],
+        "dev": ["pytest>=6.0", "pytest-cov>=2.10.0", "black>=21.0", "mypy>=0.900", "tox>=3.0"],
     },
 )
