@@ -7,7 +7,7 @@ and the SharedDataPool that manages evidence across all branches.
 """
 
 from dataclasses import dataclass, field
-from typing import List, Optional, Set
+from typing import Dict, List, Optional, Set, Tuple
 from enum import Enum
 
 
@@ -71,7 +71,7 @@ class SharedDataPool:
     """
 
     def __init__(self):
-        self._data_points: dict[str, DataPoint] = {}
+        self._data_points: Dict[str, DataPoint] = {}
 
     def add_data(self, data_point: DataPoint) -> bool:
         """
@@ -143,7 +143,7 @@ class Problem:
             raise ValueError(f"DataPoint with id '{data_point.id}' already exists")
         self.data_points.append(data_point)
 
-    def validate(self) -> tuple[bool, str]:
+    def validate(self) -> Tuple[bool, str]:
         """
         Validate the problem structure.
 

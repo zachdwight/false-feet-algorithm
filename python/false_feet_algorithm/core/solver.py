@@ -6,7 +6,7 @@ independent branches competing to find the best solution.
 """
 
 import logging
-from typing import List, Optional, Type
+from typing import List, Optional, Tuple, Type
 from false_feet_algorithm.core.problem import Problem, Option, SharedDataPool
 from false_feet_algorithm.core.branch import EvaluationBranch
 from false_feet_algorithm.core.evaluator import HypothesisEvaluator
@@ -239,7 +239,7 @@ class AmoebaInvestigation:
                 logger.error(f"Error in culling phase for branch {branch.branch_id}: {e}")
                 branch.kill()
 
-    def _phase_convergence_check(self) -> tuple[bool, Optional[Option]]:
+    def _phase_convergence_check(self) -> Tuple[bool, Optional[Option]]:
         """
         Phase F: Check if all alive branches agree on the same option.
 
