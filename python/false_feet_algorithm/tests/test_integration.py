@@ -1,6 +1,7 @@
 """Integration tests for the False Feet Algorithm."""
 
 import pytest
+from typing import List
 from false_feet_algorithm.core import (
     Problem,
     Option,
@@ -22,7 +23,7 @@ class SimpleEvaluationBranch(BaseBranch):
         self.set_score(score)
         return score
 
-    def propose_data(self, data_pool) -> list[str]:
+    def propose_data(self, data_pool) -> List[str]:
         # Don't propose anything in this simple test
         return []
 

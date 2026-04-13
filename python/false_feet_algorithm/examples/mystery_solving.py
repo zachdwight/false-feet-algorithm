@@ -10,6 +10,7 @@ the true culprit.
 """
 
 import logging
+from typing import List
 from false_feet_algorithm.core import (
     Problem,
     Option,
@@ -62,7 +63,7 @@ class InvestigationBranch(BaseBranch):
         self.set_score(score)
         return score
 
-    def propose_data(self, data_pool) -> list[str]:
+    def propose_data(self, data_pool) -> List[str]:
         """Propose the next clue to investigate."""
         # Suggest clues that would distinguish between suspects
         clue_suggestions = {

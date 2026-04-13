@@ -13,6 +13,7 @@ with the available test results and clinical findings.
 """
 
 import logging
+from typing import List
 from false_feet_algorithm.core import (
     Problem,
     Option,
@@ -102,7 +103,7 @@ class MedicalDiagnosisBranch(BaseBranch):
 
         return score
 
-    def propose_data(self, data_pool) -> list[str]:
+    def propose_data(self, data_pool) -> List[str]:
         """
         Propose the next most useful diagnostic tests.
 
