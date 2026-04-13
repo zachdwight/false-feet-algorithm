@@ -1,3 +1,20 @@
+# Build artifacts (C++)
+*.o
+*.a
+*.so
+*.dylib
+*.dll
+*.exe
+*.out
+solver
+poirot_solver
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
 # Python
 __pycache__/
 *.py[cod]
@@ -37,6 +54,8 @@ htmlcov/
 *.swo
 *~
 .DS_Store
+*.sublime-project
+*.sublime-workspace
 
 # Logs
 *.log
@@ -52,3 +71,17 @@ ENV/
 *.png
 *.pdf
 *.csv
+
+# Dependencies
+*.dep
+*.d
+
+# Temporary
+*.tmp
+*.bak
+*.old
+*.backup
+
+# Documentation builds
+docs/_build/
+site/

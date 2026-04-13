@@ -1,185 +1,189 @@
 # False Feet Algorithm
 
-A novel multi-branch hypothesis evaluation system that allocates MORE resources to weak hypotheses, forcing them to improve or die off.
+> **Amoeba: Novel Multi-Branch Hypothesis Evaluation with Inverse Resource Allocation**
 
-## Overview
+A powerful algorithm for solving complex reasoning problems through competitive multi-branch investigation. Instead of giving more resources to strong hypotheses, we give MORE to weak ones—forcing them to improve or die off. When multiple independent reasoning paths converge on the same answer, that's a very robust signal.
 
-The False Feet Algorithm (also called Amoeba) implements a unique approach to hypothesis evaluation:
+## 📦 Two Implementations
 
-- **Multiple Independent Branches** - Each branch independently evaluates a hypothesis
-- **Inverse Resource Allocation** - Weakest branches get MORE resources (proposal slots)
-- **Convergence Signal** - When multiple independent paths converge on the same answer despite different starting assumptions, this provides a robust confidence signal
+This repository contains **both C++ (original) and Python (new) implementations**:
 
-When strong branches receive few resources (and slow down), weak branches are forced to either improve or die off. This competitive pressure leads to convergence on robust solutions.
-
-## Features
-
-- **Generic Framework** - Apply to any domain: medical diagnosis, debugging, anomaly detection, hypothesis evaluation
-- **Clean Python API** - Easy to understand and extend
-- **Domain Customization** - Subclass `BaseBranch` and `BaseEvaluator` for custom logic
-- **Configurable Parameters** - Control iteration limits, evidence budgets, starvation thresholds
-- **Logging & Visualization** - Debug output and optional plotting tools (optional matplotlib dependency)
-
-## Installation
+### 🐍 **Python Version** (`python/`)
+- **Pure Python**, minimal dependencies  
+- Generic framework for any hypothesis evaluation problem
+- Medical diagnosis and mystery solving examples
+- 39 comprehensive tests (all passing)
+- Visualization tools (optional matplotlib)
+- **Ready for PyPI publication**
 
 ```bash
-pip install false-feet-algorithm
+cd python
+pip install -e .
+python -m false_feet_algorithm.examples.mystery_solving
 ```
 
-For visualization support:
+### ⚡ **C++ Version** (`cpp/`)
+- High-performance reference implementation
+- Original mystery solver ("The Vanished Necklace")
+- Generic framework with benchmarks
+- Full specification and execution traces
+
 ```bash
-pip install false-feet-algorithm[viz]
+cd cpp
+g++ -std=c++17 -O2 src/poirot_main.cpp -o solver
+./solver
 ```
 
-## Quick Start
+---
 
-```python
-from false_feet_algorithm.core import Problem, Option, DataPoint, AmoebaInvestigation
+## 🎯 Core Innovation
 
-# Define the problem
-problem = Problem(
-    title="Root Cause Analysis",
-    description="Three hypotheses, five pieces of evidence",
-    goal="Identify the root cause"
-)
+**Instead of giving resources to strong hypotheses, we give MORE to weak ones.**
 
-# Add competing hypotheses
-problem.add_option(Option(
-    id="opt1",
-    name="Memory leak",
-    rationale="Process memory grows over time",
-    initial_score=60
-))
+When weak branches are forced to improve or die off, and multiple independent reasoning paths converge on the same answer despite different starting assumptions—that's a highly robust signal.
 
-problem.add_option(Option(
-    id="opt2",
-    name="Infinite loop",
-    rationale="CPU usage is high",
-    initial_score=40
-))
+### The 6-Phase Algorithm
 
-# Add evidence
-problem.add_data_point(DataPoint(
-    id="d1",
-    title="Memory Monitor Log",
-    description="Heap usage increased by 100MB over 1 hour",
-    supports=["opt1"],
-    contradicts=["opt2"],
-    priority=5
-))
+Each iteration:
+1. **Investigation** — Branches evaluate current evidence
+2. **Evaluation** — Score each hypothesis (0-1)
+3. **Resource Allocation** — **INVERSE ranking (weakest gets most slots!)**
+4. **Evidence Gathering** — Branches propose new data to investigate
+5. **Starvation & Culling** — Non-improving branches gradually die
+6. **Convergence Check** — All agree? → SOLVED
 
-# Solve
-solver = AmoebaInvestigation(problem)
-result = solver.solve()
+---
 
-print(f"Conclusion: {result.name}")
-print(f"Supporting evidence: {solver.get_supporting_evidence()}")
+## 🐍 Python Quick Start
+
+```bash
+cd python
+pip install -e ".[viz]"
+
+python -m false_feet_algorithm.examples.mystery_solving
+python -m false_feet_algorithm.examples.clinical_diagnosis
 ```
 
-## Domain Customization
-
-Extend the algorithm for domain-specific reasoning:
+### Extend for Your Domain
 
 ```python
-from false_feet_algorithm.core import BaseBranch, BaseEvaluator, AmoebaInvestigation
+from false_feet_algorithm.core import Problem, Option, DataPoint, BaseBranch, BaseEvaluator, AmoebaInvestigation
 
-# Custom branch logic
-class MedicalDiagnosisBranch(BaseBranch):
+class YourBranch(BaseBranch):
     def evaluate(self, data_pool):
-        # Custom medical reasoning logic
-        # Examine test results, patient history, symptoms
-        # Return a score 0.0-1.0
-        return self.custom_medical_score(data_pool)
+        # Your domain reasoning logic
+        return score  # 0.0-1.0
     
     def propose_data(self, data_pool):
-        # Suggest which tests to run next
-        # Return list of data point IDs to investigate
-        return self.suggest_next_tests(data_pool)
+        # Suggest next evidence/tests
+        return proposed_ids
 
-# Custom scoring
-class MedicalEvaluator(BaseEvaluator):
+class YourEvaluator(BaseEvaluator):
     def evaluate(self, branch, data_pool):
-        # Domain-specific scoring based on clinical likelihood,
-        # test sensitivity/specificity, cost/risk of further testing
-        return self.clinical_score(branch, data_pool)
+        # Your scoring logic
+        return score
 
-# Use with solver
-solver = AmoebaInvestigation(problem)
-solver.solve()
-```
+problem = Problem(title="Your Problem")
+# ... add options and evidence ...
 
-## Algorithm Phases
-
-Each iteration consists of 6 phases:
-
-1. **Investigation** - Branches evaluate current evidence
-2. **Evaluation** - Scoring using evaluator (or custom logic)
-3. **Resource Allocation** - Weakest branches get more proposal slots
-4. **Evidence Gathering** - Branches propose new data to investigate
-5. **Starvation & Culling** - Remove non-improving branches
-6. **Convergence Check** - Stop if all branches agree
-
-## Configuration
-
-```python
 solver = AmoebaInvestigation(
     problem,
-    max_iterations=100,           # Loop limit
-    max_pool_size=500,            # Evidence budget
-    starvation_threshold=5,       # Iterations before branch dies
-    evaluator=custom_evaluator,   # Custom evaluation logic
-    branch_class=CustomBranch,    # Custom branch implementation
+    branch_class=YourBranch,
+    evaluator=YourEvaluator()
 )
+result = solver.solve()
 ```
 
-## Logging
+---
 
-```python
-import logging
+## 📚 Documentation
 
-logging.basicConfig(level=logging.DEBUG)
-# DEBUG: branch proposals, evaluations
-# INFO: iteration summaries, branch counts
-# WARNING: convergence failures
+### Python (`python/`)
+- API docs in `false_feet_algorithm/core/`
+- Examples in `false_feet_algorithm/examples/`
+- Tests in `false_feet_algorithm/tests/`
+- Full README in `python/README.md`
+
+### C++ (`cpp/`)
+- **QUICK_START.md** — Visual introduction (15 min)
+- **EXECUTION_TRACE.md** — Detailed walkthrough (1 hour)
+- **amoeba_algorithm_spec.md** — Full formal spec (4+ hours)
+- **BENCHMARKS.md** — Performance analysis
+- Source code in `src/`
+
+---
+
+## 🧪 Test Case: The Vanished Necklace
+
+Both versions solve the classic mystery:
+- **Problem:** Identify the culprit among 4 suspects
+- **Evidence:** 13 pieces of investigative clues
+- **Solution:** All branches converge on **Butler** ✅
+
+Run it:
+```bash
+# Python
+cd python && python -m false_feet_algorithm.examples.mystery_solving
+
+# C++
+cd cpp && g++ -std=c++17 -O2 src/poirot_main.cpp -o solver && ./solver
 ```
 
-## Examples
+---
 
-See the `examples/` directory for complete examples:
-- `clinical_diagnosis.py` - Medical differential diagnosis
-- `mystery_solving.py` - Classic logic puzzle
+## 📦 Publishing (Python)
 
-## Research & References
-
-The False Feet Algorithm implements inverse resource allocation for hypothesis evaluation. Key properties:
-
-- **Convergence** - Multiple independent paths reaching same answer provides high confidence
-- **Robustness** - Weak branches forced to improve prevents premature elimination
-- **Scalability** - Works with any number of hypotheses and evidence points
-
-## Development
+The Python implementation is ready for PyPI:
 
 ```bash
-# Install dev dependencies
-pip install -e ".[dev,viz]"
-
-# Run tests
-pytest
-
-# Run with coverage
-pytest --cov=false_feet_algorithm
-
-# Format code
-black false_feet_algorithm
-
-# Type checking
-mypy false_feet_algorithm
+cd python
+pip install build twine
+python -m build
+twine upload dist/*
 ```
 
-## License
+Users can then install with:
+```bash
+pip install false-feet-algorithm
+pip install false-feet-algorithm[viz]  # With visualization
+```
 
-MIT License - see LICENSE file for details
+---
 
-## Contributing
+## 📊 Quick Comparison
 
-Contributions welcome! Please open an issue or PR on GitHub.
+| Aspect | Python | C++ |
+|--------|--------|-----|
+| **Language** | Python 3.7+ | C++17 |
+| **Speed** | Good | Excellent |
+| **Setup** | `pip install` | `g++ compile` |
+| **Extensibility** | Easy (subclass) | Moderate (templates) |
+| **Dependencies** | Minimal (none core) | None |
+| **Best For** | Research, production | Performance-critical |
+| **PyPI Ready** | ✅ Yes | ❌ No |
+
+---
+
+## 🤝 Contributing
+
+See CONTRIBUTING.md for development guidelines.
+
+**Ways to contribute:**
+- **Python:** New domains, improved evaluators, optimizations
+- **C++:** Benchmarking, performance optimization, research
+- **Both:** Examples, documentation, tutorials
+
+---
+
+## 📄 License
+
+MIT License - see LICENSE file
+
+---
+
+**Next steps:**
+1. **Python users:** `cd python && pip install -e ".[viz]"`
+2. **C++ users:** `cd cpp && cat docs/QUICK_START.md`
+3. **Researchers:** `cd cpp && cat docs/BENCHMARKS.md`
+
+Questions? Open an issue on GitHub.
