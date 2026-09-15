@@ -44,14 +44,20 @@ python -m false_feet_algorithm.examples.clinical_diagnosis
 
 ```bash
 cd cpp
-g++ -std=c++17 -O2 src/poirot_main.cpp -o solver
-./solver
+# Mystery solving example
+g++ -std=c++17 -O2 src/poirot_main.cpp -o poirot_solver
+./poirot_solver
+
+# LLM reasoning robustness verification
+g++ -std=c++17 -O2 examples/llm_reasoning_robustness.cpp -o llm_solver
+./llm_solver
 ```
 
 ## Documentation
 
 - **Python:** `python/README.md` — API, examples, extensibility
-- **C++:** `cpp/docs/QUICK_START.md` — Visual intro, execution traces, benchmarks
+- **C++:** `cpp/README.md` — Implementation guide, examples, compilation
+- **C++ Quick Start:** `cpp/docs/QUICK_START.md` — Visual intro, algorithm walkthrough
 
 ## Use Cases
 
