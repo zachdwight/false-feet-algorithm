@@ -15,6 +15,7 @@ Run the examples:
 ```bash
 python -m false_feet_algorithm.examples.mystery_solving
 python -m false_feet_algorithm.examples.clinical_diagnosis
+python -m false_feet_algorithm.examples.llm_reasoning_robustness
 ```
 
 ## How It Works
@@ -69,6 +70,7 @@ print(f"Best hypothesis: {result.option.id}")
 
 - **Mystery Solving** — Classic logic puzzle (identify the culprit from clues)
 - **Medical Diagnosis** — Differential diagnosis from symptoms and tests
+- **LLM Reasoning Robustness** — Verify LLM answer quality by generating multiple independent reasoning paths (step-by-step, devil's advocate, constraint-based, evidence-first) and checking for convergence. Uses inverse resource allocation to give extra scrutiny to weaker reasoning paths.
 
 ## Visualization (Optional)
 
