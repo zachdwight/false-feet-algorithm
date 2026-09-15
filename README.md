@@ -113,7 +113,7 @@ result = solver.solve()
 
 ---
 
-## 🧪 Test Case: The Vanished Necklace
+## Simple Case: The Vanished Necklace
 
 Both versions solve the classic mystery:
 - **Problem:** Identify the culprit among 4 suspects
@@ -130,7 +130,7 @@ cd cpp && g++ -std=c++17 -O2 src/poirot_main.cpp -o solver && ./solver
 ```
 
 ---
-### Real World Case: LLM Reasoning Robustness
+## Real World Case: LLM Reasoning Robustness
 
 **Problem:** How do you know when an LLM's answer is actually trustworthy? A single response might sound confident but be completely wrong.
 
