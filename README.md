@@ -130,6 +130,44 @@ cd cpp && g++ -std=c++17 -O2 src/poirot_main.cpp -o solver && ./solver
 ```
 
 ---
+### Real World Case: LLM Reasoning Robustness
+
+**Problem:** How do you know when an LLM's answer is actually trustworthy? A single response might sound confident but be completely wrong.
+
+**Solution:** Run the same problem through multiple independent reasoning paths. When different approaches converge on the same conclusion despite different starting assumptions, that's a robust signal.
+
+**How it works:**
+1. Generate multiple independent reasoning frameworks (step-by-step, devil's advocate, constraint-based, evidence-first)
+2. Evaluate each path's internal consistency and strength
+3. Use inverse resource allocation—give more scrutiny to weaker paths (forcing them to improve or fail)
+4. Check for convergence—do the paths agree?
+
+When paths converge → high confidence. When they diverge → catch hallucinations early.
+
+**Run the demo:**
+
+```bash
+python -m false_feet_algorithm.examples.llm_reasoning_robustness
+```
+
+**Output example:**
+```
+Path Evaluations:
+  0. step_by_step         | Conclusion: C | Strength: 0.85
+  1. devil's_advocate     | Conclusion: C | Strength: 0.80
+  2. constraint_based     | Conclusion: C | Strength: 0.90
+  3. evidence_first       | Conclusion: C | Strength: 0.85
+
+✅ CONVERGENCE ACHIEVED - Reasoning is robust
+Confidence: 0.88
+Recommendation: ACCEPT
+```
+
+**Real-world use:** Any high-stakes LLM decision (medical diagnosis, financial analysis, policy recommendations) where you need to verify the reasoning is sound, not just that the LLM sounds confident.
+
+**Production version:** Replace simulated responses with real Claude API calls to verify reasoning on actual problems.
+
+---
 
 ## 📦 Publishing (Python)
 
