@@ -32,12 +32,6 @@ jobs:
       run: |
         cd python && pytest false_feet_algorithm/tests/ -v --cov=false_feet_algorithm
 
-    - name: Upload coverage
-      if: matrix.python-version == '3.9'
-      uses: codecov/codecov-action@v3
-      with:
-        files: ./python/.coverage
-
   publish:
     name: Publish to PyPI
     runs-on: ubuntu-latest
