@@ -5,6 +5,25 @@ All notable changes to the False Feet Algorithm Python implementation will be do
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0] - 2026-09-15
+
+### Added
+- **LLM Reasoning Robustness Example** — Multi-path convergence analysis for verifying LLM answer quality
+  - Multiple independent reasoning paths (step-by-step, devil's advocate, constraint-based, evidence-first)
+  - Path strength evaluation and convergence checking
+  - Inverse resource allocation to scrutinize weaker reasoning paths
+  - Practical example showing when to accept or flag LLM conclusions
+- C++ implementation of LLM reasoning robustness example in `cpp/examples/`
+- C++ README with build instructions and example descriptions
+- Enhanced project documentation linking Python and C++ implementations
+
+### Changed
+- Removed codecov integration from CI workflow (was causing silent failures)
+
+### Features
+- New domain example: LLM output verification and quality assurance
+- Cross-language consistency between Python and C++ implementations
+
 ## [0.1.1] - 2026-04-14
 
 ### Changed
