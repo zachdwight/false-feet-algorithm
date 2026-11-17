@@ -83,7 +83,11 @@ class AmoebaInvestigation:
         self.iteration = 0
         self.conclusion: Optional[Option] = None
         self.supporting_evidence: List[str] = []
-
+        
+    def set_discoverable_catalog(self, catalog: dict):
+        """Optional: catalog of DataPoint objects that can be discovered by ID."""
+        self._discoverable_catalog = catalog
+        
     def solve(self) -> Optional[Option]:
         """
         Run the Amoeba algorithm until convergence or max iterations.
