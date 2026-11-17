@@ -5,6 +5,25 @@ All notable changes to the False Feet Algorithm Python implementation will be do
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.1] - 2026-11-17
+
+### Fixed
+- Evidence gathering phase now actually adds proposed data to the shared pool when a branch implements `resolve_proposed_data` (or a catalog is supplied). Previously proposals were only tracked and never injected, so scores stayed static and all branches starved.
+- Mystery-solving example now converges (discoverable clues are resolved and added).
+- Clinical-diagnosis example now converges (discoverable test results are resolved and added).
+
+### Changed
+- Dropped support for Python < 3.10.
+  - `requires-python = ">=3.10"`
+  - Classifiers limited to 3.10–3.13
+  - `tox.ini` envlist = `py310,py311,py312,py313`
+  - GitHub Actions test matrix = `['3.10', '3.11']`
+- Removed obsolete 3.7/3.8/3.9 references that caused `setup-python` failures on Ubuntu 26.04 (`ubuntu-latest`).
+
+### Added
+- Optional `set_discoverable_catalog()` helper on `AmoebaInvestigation` for shared evidence catalogs.
+- `resolve_proposed_data` implementations in the mystery and clinical examples.
+
 ## [0.2.0] - 2026-09-15
 
 ### Added
