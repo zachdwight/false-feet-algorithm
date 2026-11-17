@@ -141,6 +141,99 @@ class MedicalDiagnosisBranch(BaseBranch):
 
         return proposed[:self.state.proposal_slots]
 
+    def resolve_proposed_data(self, data_id: str):
+        """Return a DataPoint for a proposed diagnostic test."""
+        catalog = {
+            "tsh_test": DataPoint(
+                id="tsh_test",
+                title="TSH (confirmatory)",
+                description="Repeat TSH 11.8 mIU/L (still elevated)",
+                supports=["hypothyroidism"],
+                contradicts=["depression", "anemia"],
+                priority=5,
+            ),
+            "free_t4_test": DataPoint(
+                id="free_t4_test",
+                title="Free T4 (confirmatory)",
+                description="Free T4 0.7 ng/dL (low)",
+                supports=["hypothyroidism"],
+                contradicts=["depression"],
+                priority=5,
+            ),
+            "antibody_test": DataPoint(
+                id="antibody_test",
+                title="Thyroid antibodies",
+                description="TPO antibodies positive",
+                supports=["hypothyroidism"],
+                contradicts=[],
+                priority=4,
+            ),
+            "metabolic_panel": DataPoint(
+                id="metabolic_panel",
+                title="Metabolic panel",
+                description="Mild hyponatremia, elevated lipids",
+                supports=["hypothyroidism"],
+                contradicts=[],
+                priority=3,
+            ),
+            "phq9_screening": DataPoint(
+                id="phq9_screening",
+                title="PHQ-9",
+                description="PHQ-9 score 6 (mild)",
+                supports=[],
+                contradicts=["depression"],
+                priority=4,
+            ),
+            "vitamin_b12": DataPoint(
+                id="vitamin_b12",
+                title="Vitamin B12",
+                description="B12 420 pg/mL (normal)",
+                supports=[],
+                contradicts=["anemia"],
+                priority=3,
+            ),
+            "thyroid_antibodies": DataPoint(
+                id="thyroid_antibodies",
+                title="Thyroid antibodies (rule-out)",
+                description="TPO antibodies negative",
+                supports=[],
+                contradicts=["hypothyroidism"],
+                priority=3,
+            ),
+            "cbc_test": DataPoint(
+                id="cbc_test",
+                title="CBC",
+                description="Hemoglobin 13.8 g/dL (normal)",
+                supports=[],
+                contradicts=["anemia"],
+                priority=5,
+            ),
+            "iron_studies": DataPoint(
+                id="iron_studies",
+                title="Iron studies",
+                description="Ferritin 85 ng/mL (normal)",
+                supports=[],
+                contradicts=["anemia"],
+                priority=4,
+            ),
+            "b12_folate": DataPoint(
+                id="b12_folate",
+                title="B12 / Folate",
+                description="Both within normal limits",
+                supports=[],
+                contradicts=["anemia"],
+                priority=3,
+            ),
+            "blood_smear": DataPoint(
+                id="blood_smear",
+                title="Blood smear",
+                description="Normal red-cell morphology",
+                supports=[],
+                contradicts=["anemia"],
+                priority=3,
+            ),
+        }
+        return catalog.get(data_id)
 
 class MedicalEvaluator(BaseEvaluator):
     """
