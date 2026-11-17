@@ -28,7 +28,7 @@ Result: Convergence is a robust signal. Divergence catches problems early.
 
 ## Quick Start
 
-### Python
+### Python (updated Nov 17 2026)
 
 ```bash
 cd python
