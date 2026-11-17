@@ -187,28 +187,37 @@ class AmoebaInvestigation:
     def _phase_evidence_gathering(self) -> None:
         """
         Phase D: Branches propose new evidence to add to the pool.
-
-        Proposals are deduplicated before adding to the pool.
+    
+        If a branch proposes an ID that is not yet in the pool, and the branch
+        provides a way to resolve it (via a catalog or factory), it is added.
         """
-        all_proposals = {}  # Dict to avoid duplicates: data_id -> DataPoint
-
         for branch in self.branches:
             if not branch.is_alive() or branch.state.proposal_slots <= 0:
                 continue
-
+    
             try:
                 proposed_ids = branch.propose_data(self.data_pool)
-                # Take only up to proposal_slots
                 proposed_ids = proposed_ids[: branch.state.proposal_slots]
                 logger.debug(f"Branch {branch.branch_id} proposed: {proposed_ids}")
-                # Note: In real usage, these would be actual DataPoint objects
-                # For this base implementation, we assume IDs refer to known data points
-                branch.state.proposed_data_ids.extend(proposed_ids)
+    
+                for data_id in proposed_ids:
+                    if self.data_pool.has_data(data_id):
+                        continue
+    
+                    # Allow the branch (or a shared catalog) to supply the DataPoint
+                    dp = None
+                    if hasattr(branch, "resolve_proposed_data"):
+                        dp = branch.resolve_proposed_data(data_id)
+                    elif hasattr(self, "_discoverable_catalog"):
+                        dp = self._discoverable_catalog.get(data_id)
+    
+                    if dp is not None:
+                        added = self.data_pool.add_data(dp)
+                        if added:
+                            logger.info(f"  + Added evidence: {dp.title} ({data_id})")
+                            branch.state.proposed_data_ids.append(data_id)
             except Exception as e:
                 logger.error(f"Error in proposal phase for branch {branch.branch_id}: {e}")
-
-        # In a real scenario, branches would propose new DataPoint objects
-        # and we'd add them here. This base implementation mainly tracks proposals.
 
     def _phase_starvation_culling(self) -> None:
         """
