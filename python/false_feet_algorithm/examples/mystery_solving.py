@@ -79,7 +79,61 @@ class InvestigationBranch(BaseBranch):
                 proposed.append(clue_id)
 
         return proposed[:self.state.proposal_slots]
-
+        
+    def resolve_proposed_data(self, data_id: str):
+        """Return a DataPoint for a proposed clue ID (discoverable evidence)."""
+        catalog = {
+            "clue_alibi": DataPoint(
+                id="clue_alibi",
+                title="Alice's Alibi Confirmed",
+                description="Kitchen staff confirm Alice was preparing meals the entire morning",
+                supports=[],
+                contradicts=["alice"],
+                priority=5,
+            ),
+            "clue_fingerprint": DataPoint(
+                id="clue_fingerprint",
+                title="Fingerprint Match",
+                description="Fingerprints on the case match Alice — but she polishes the case daily",
+                supports=["alice"],
+                contradicts=[],
+                priority=4,
+            ),
+            "clue_location": DataPoint(
+                id="clue_location",
+                title="Butler's Location",
+                description="Security logs show Bob left the property before the theft window",
+                supports=[],
+                contradicts=["bob"],
+                priority=5,
+            ),
+            "clue_motive_bob": DataPoint(
+                id="clue_motive_bob",
+                title="Bob's Motive Weakened",
+                description="Bob had already received a generous severance package",
+                supports=[],
+                contradicts=["bob"],
+                priority=3,
+            ),
+            "clue_opportunity": DataPoint(
+                id="clue_opportunity",
+                title="Gardener's Opportunity",
+                description="Carol was seen near the study just before the theft",
+                supports=["carol"],
+                contradicts=[],
+                priority=4,
+            ),
+            "clue_timeline": DataPoint(
+                id="clue_timeline",
+                title="Locked Doors Timeline",
+                description="Doors were locked from 10–11 AM; only staff with keys could enter",
+                supports=["alice", "bob"],
+                contradicts=["carol", "diana"],
+                priority=4,
+            ),
+            # Add more as needed for diana, etc.
+        }
+        return catalog.get(data_id)
 
 class MysteryEvaluator(BaseEvaluator):
     """Evaluate guilt based on motive, means, and opportunity."""
